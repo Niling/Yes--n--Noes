@@ -132,4 +132,37 @@ public class Database {
 		return dbLink.insert(DatabaseHelper.LIST_TABLE, null, values) > 0;
 	}
 
+	/**
+	 * Delets a category
+	 * 
+	 * @param category
+	 * @return
+	 */
+	public boolean deleteCategory(Category category) {
+		return dbLink.delete(DatabaseHelper.MAIN_TABLE, "_id=?",
+				new String[] { String.valueOf(category.getId()) }) > 0;
+
+	}
+
+	/**
+	 * Delete ProsCons
+	 * 
+	 * @param pc
+	 * @return
+	 */
+	public boolean deleteProsCons(ProsCons pc) {
+		return dbLink.delete(DatabaseHelper.LIST_TABLE, "_id=?",
+				new String[] { String.valueOf(pc.getId()) }) > 0;
+	}
+
+	/**
+	 * Deletes all categories for a certain category.
+	 * 
+	 * @param category
+	 * @return
+	 */
+	public boolean deleteAllProsConsForCategory(Category category) {
+		return dbLink.delete(DatabaseHelper.LIST_TABLE, "categoryId=?",
+				new String[] { String.valueOf(category.getId()) }) > 0;
+	}
 }
