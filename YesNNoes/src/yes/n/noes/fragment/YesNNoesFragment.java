@@ -2,9 +2,10 @@ package yes.n.noes.fragment;
 
 import java.util.ArrayList;
 
+import yes.n.noes.ItemActivity;
 import yes.n.noes.data.Category;
 import yes.n.noes.database.Database;
-import yes.n.noes.func.AddDialog.OnAddListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -14,10 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 public class YesNNoesFragment extends ListFragment implements
-		OnItemClickListener, OnAddListener {
+		OnItemClickListener {
 
 	Database db;
 	ArrayAdapter<String> adapter;
+	ArrayList<Category> categories;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public class YesNNoesFragment extends ListFragment implements
 
 		// Now create a new list adapter bound to the cursor.
 		// SimpleListAdapter is designed for binding to a Cursor.
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+		adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, new ArrayList<String>(0));
 
 		// Bind to our new adapter.
@@ -35,15 +37,19 @@ public class YesNNoesFragment extends ListFragment implements
 		update();
 	}
 
-	private void update() {
+	public void update() {
 		if (!adapter.isEmpty()) {
 			adapter.clear();
 		}
 		db = new Database(getActivity().getApplicationContext());
 		db.openDatabase();
-		ArrayList<Category> categorys = db.getCategories();
+		categories = db.getCategories();
 
-		for (Category loop : categorys) {
+		if (categories == null) {
+			return;
+		}
+
+		for (Category loop : categories) {
 			adapter.add(loop.getName());
 		}
 
@@ -51,28 +57,16 @@ public class YesNNoesFragment extends ListFragment implements
 
 	}
 
-	public void AddCat(String addCat) {
-		Category cat = new Category(0);
-		cat.setName(addCat);
-		db = new Database(getActivity().getApplicationContext());
-		db.openDatabase();
-		db.insertCategory(cat);
-		db.close();
-		update();
-
-	}
-
 	public void onItemClick(AdapterView<?> parent, View v, int pos, long arg3) {
 
-		Toast.makeText(getActivity().getApplicationContext(), "pressed" + pos,
-				Toast.LENGTH_SHORT).show();
+		int value = 0;
+		Category temp = categories.get(pos);
+		Intent intent = new Intent(getActivity().getApplicationContext(),
+				ItemActivity.class);
 
-		// Intent intent= new Intent(this,Item_Activity.class);
-		// int value=0;
-		//
-		//
-		// intent.putExtra("cato", value);
-		// startActivity(intent);
+		value = temp.getId();
+		intent.putExtra("cato", value);
+		startActivity(intent);
 
 	}
 
