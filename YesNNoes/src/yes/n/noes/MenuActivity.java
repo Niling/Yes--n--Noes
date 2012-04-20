@@ -1,11 +1,11 @@
 package yes.n.noes;
 
-import android.app.ListActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class MenuActivity extends ListActivity {
+public class MenuActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
