@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import yes.n.noes.data.Category;
 import yes.n.noes.data.ProsCons;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,11 +21,17 @@ public class Database {
 
 	}
 
+	/**
+	 * Opens database connection
+	 */
 	public void openDatabase() {
 		db = new DatabaseHelper(context);
 		dbLink = db.getWritableDatabase();
 	}
 
+	/**
+	 * Closes database connection
+	 */
 	public void close() {
 		if (dbLink.isOpen()) {
 			dbLink.close();
@@ -33,6 +40,11 @@ public class Database {
 		db.close();
 	}
 
+	/**
+	 * Gets all categories
+	 * 
+	 * @return
+	 */
 	public ArrayList<Category> getCategories() {
 		Cursor results = dbLink.query(DatabaseHelper.MAIN_TABLE, null, null,
 				null, null, null, null);
@@ -56,29 +68,68 @@ public class Database {
 		return categories;
 	}
 
+	/**
+	 * Fetches all pros and cons from the database.
+	 * 
+	 * @param category
+	 *            wich category?
+	 * @return
+	 */
 	public ArrayList<ProsCons> getProsCons(Category category) {
 		Cursor results = dbLink.query(DatabaseHelper.LIST_TABLE, null,
 				"category=?", new String[] { category.getName() }, null, null,
 				null);
-		
-		if(!results.moveToFirst()) {
+
+		if (!results.moveToFirst()) {
 			return null;
 		}
-		
-		ArrayList<ProsCons> prosConsList = new ArrayList<ProsCons>(results.getCount());
-		
-		while(!results.moveToFirst()) {
-			ProsCons tmp = new ProsCons(results.getInt(0), results.getString(1), results.getString(2));
+
+		ArrayList<ProsCons> prosConsList = new ArrayList<ProsCons>(
+				results.getCount());
+
+		while (!results.moveToFirst()) {
+			ProsCons tmp = new ProsCons(results.getInt(0), results.getInt(1));
+			tmp.setState(results.getInt(2) > 0);
 			tmp.setName(results.getString(3));
 			tmp.setComment(results.getString(4));
 			tmp.setDate(results.getString(5));
-			
+
 			prosConsList.add(tmp);
-			
+
 			results.moveToNext();
 		}
-		
+
 		return prosConsList;
+	}
+
+	/**
+	 * Inserts a category into main table
+	 * 
+	 * @param category
+	 * @return
+	 */
+	public boolean insertCategory(Category category) {
+		ContentValues values = new ContentValues();
+		values.put("name", category.getName());
+
+		return dbLink.insert(DatabaseHelper.MAIN_TABLE, null, values) > 0;
+	}
+
+	/**
+	 * Inserts ProsCons into database.
+	 * 
+	 * @param pc
+	 * @return
+	 */
+	public boolean insertProsCons(ProsCons pc) {
+		ContentValues values = new ContentValues();
+		values.put("categoryId", pc.getCategoryId());
+		values.put("state", pc.getState() ? 1 : 0);
+		values.put("name", pc.getName());
+		values.put("comment", pc.getComment());
+		values.put("date", pc.getDate());
+
+		return dbLink.insert(DatabaseHelper.LIST_TABLE, null, values) > 0;
 	}
 
 }

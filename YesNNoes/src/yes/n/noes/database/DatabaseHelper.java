@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		// List
 		db.execSQL("CREATE TABLE "
 				+ LIST_TABLE
-				+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, state TEXT, name TEXT, comment TEXT, date TEXT);");
+				+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, categoryId INTEGER, state INTEGER, name TEXT, comment TEXT, date TEXT);");
 	}
 
 	@Override

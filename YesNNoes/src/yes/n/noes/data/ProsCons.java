@@ -3,17 +3,16 @@ package yes.n.noes.data;
 public class ProsCons {
 
 	private final int id;
-	private final String state;
-	private final String category;
+	private boolean state;
+	private final int categoryId;
 
 	private String name;
 	private String date;
 	private String comment;
 
-	public ProsCons(int id, String category, String state) {
+	public ProsCons(int id, int categoryId) {
 		this.id = id;
-		this.state = state;
-		this.category = category;
+		this.categoryId = categoryId;
 	}
 
 	public String getDate() {
@@ -36,8 +35,12 @@ public class ProsCons {
 		return id;
 	}
 
-	public String getState() {
+	public boolean getState() {
 		return state;
+	}
+	
+	public void setState(boolean state) {
+		this.state = state;
 	}
 
 	public String getName() {
@@ -48,8 +51,8 @@ public class ProsCons {
 		this.name = name;
 	}
 
-	public String getCategory() {
-		return category;
+	public int getCategoryId() {
+		return categoryId;
 	}
 
 }
