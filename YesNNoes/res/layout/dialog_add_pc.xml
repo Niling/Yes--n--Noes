@@ -2,7 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="@dimen/padding" >
+
+    <Spinner
+        android:id="@+id/add_pc_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding" />
 
     <TextView
         style="@style/text"
@@ -12,17 +19,26 @@
         android:id="@+id/add_pc_name_input"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding"
         android:inputType="text" />
-    
+
     <TextView
         style="@style/text"
         android:text="@string/add_pc_name" />
 
     <EditText
-        android:id="@+id/add_pc_name_input"
+        android:id="@+id/add_pc_comment_input"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text" />
+        android:layout_marginBottom="@dimen/padding"
+        android:inputType="text"
+        android:text="@string/add_optional" />
 
+    <Button
+        android:id="@+id/add_pc_enter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_pc_button" >
+    </Button>
 
 </LinearLayout>
