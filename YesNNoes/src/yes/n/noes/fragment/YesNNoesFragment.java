@@ -82,7 +82,7 @@ public class YesNNoesFragment extends ListFragment implements
 		value = temp.getId();
 		intent.putExtra("cato", value);
 		startActivity(intent);
-//öoasdas
+//öoasdasasdsa
 	}
 
 }
