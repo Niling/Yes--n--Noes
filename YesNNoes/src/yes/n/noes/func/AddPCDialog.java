@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package yes.n.noes.func;
 
 import android.app.AlertDialog;
