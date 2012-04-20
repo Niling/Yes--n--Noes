@@ -6,5 +6,6 @@
     <string name="add_pc_comment">Comment</string>
     <string name="add_optional">Optional</string>
     <string name="add_pc_state">Yes or No?</string>
+    <string name="add_pc_button">Add</string>
 
 </resources>
