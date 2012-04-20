@@ -19,7 +19,7 @@ public class AddDialog extends DialogFragment implements OnClickListener {
 	private static OnAddListener listener;
 
 	
-	public static AddDialog newInstance(int title) {
+	public static AddDialog newInstance() {
 		AddDialog frag = new AddDialog();
 		Bundle args = new Bundle();
 		args.putInt("title", title);
@@ -30,11 +30,12 @@ public class AddDialog extends DialogFragment implements OnClickListener {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder di = new AlertDialog.Builder(getActivity());
-		ed=new EditText();
+		ed=new EditText(getActivity());
 		
 		di.setTitle("Add Category");
-		di.setView(view)
+		di.setView(ed);
 		di.setPositiveButton("add", this);
+		di.setNegativeButton("cancel", this);
 		
 		return null;
 
@@ -44,7 +45,7 @@ public class AddDialog extends DialogFragment implements OnClickListener {
 		dialog.dismiss();
 		
 		if(button == DialogInterface.BUTTON_POSITIVE) {
-			listener.AddCat();
+			listener.AddCat(ed.getText().toString());
 		}
 		
 		
